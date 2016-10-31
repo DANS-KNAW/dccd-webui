@@ -109,34 +109,25 @@ function GeoViewer(id, options) {
 
 	this.layers = [];
 	// OpenLayers with OpenStreetMaps as base layer
-	var osm = new OpenLayers.Layer.OSM();
-	
-//	// From OpenGeo
-//	//var nat = new OpenLayers.Layer.WMS(
-//    //        "Natural Earth", 
-//    //        "http://demo.opengeo.org/geoserver/wms",
-//    //        {layers: "topp:naturalearth"});
-//	// from MapBox
+	//var osm = new OpenLayers.Layer.OSM();
+	// need to use specify https explicitly, to prefent 'mixed content' warning
+	var osm = new OpenLayers.Layer.OSM("OpenStreetMap",
+			["https://a.tile.openstreetmap.org/${z}/${x}/${y}.png",
+			"https://b.tile.openstreetmap.org/${z}/${x}/${y}.png",
+			"https://c.tile.openstreetmap.org/${z}/${x}/${y}.png"]);
+
 //	var nat = new OpenLayers.Layer.XYZ(
 //            "Natural Earth", 
-//            ["http://a.tiles.mapbox.com/v3/mapbox.natural-earth-hypso-bathy/${z}/${x}/${y}.png"],
+//            ["https://a.tiles.mapbox.com/v3/mapbox.natural-earth-hypso-bathy/${z}/${x}/${y}.png"],
 //            {attribution: "Tiles ������ MapBox", 
 //            	sphericalmercator: true,
 //            	wrapDateLine: true,
 //            	numZoomLevels: 19
 //            });
 //	
-//	aerial = new OpenLayers.Layer.OSM("MapQuest Open Aerial Tiles", 
-//			["http://otile1.mqcdn.com/tiles/1.0.0/sat/${z}/${x}/${y}.jpg",
-//	         "http://otile2.mqcdn.com/tiles/1.0.0/sat/${z}/${x}/${y}.jpg",
-//	         "http://otile3.mqcdn.com/tiles/1.0.0/sat/${z}/${x}/${y}.jpg",
-//	         "http://otile4.mqcdn.com/tiles/1.0.0/sat/${z}/${x}/${y}.jpg"],
-//			{attribution: "Portions Courtesy NASA/JPL-Caltech and U.S. Depart. of Agriculture, Farm Service Agency"});
-	
 
 	this.layers[0] = osm;
 //	this.layers[1] = nat;
-//	this.layers[2] = aerial;	
 	this.map.addLayers(this.layers);
 
 	// ------------------
