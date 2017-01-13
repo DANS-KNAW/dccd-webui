@@ -507,7 +507,9 @@ public abstract class DccdSearchResultExplorePanel extends SearchPanel
 		// NOTE we always show the ProjectId because the ObjectId is incorrectly indexed 
 		// But also the project ID is forced to be unique for archived/published projects
 		// 
-		identifierStr = dccdHit.getTridasProjectIdentifier();
+		if (dccdHit.hasTridasProjectIdentifier())
+			identifierStr = dccdHit.getTridasProjectIdentifier();
+
 		// Add domain
 		String domainStr = "";
 		if (dccdHit.hasTridasProjectIdentifierDomain()) 
