@@ -39,6 +39,9 @@ ldap.securityCredentials=###Fill-In-ldapadmin-password###
 mail.smtp.host=###Fill-In-host###
 mail.fromAddress=###Fill-In-email###
 
+# PIWIK
+piwik.siteid=7
+
 # JSON cache files created by cron jobs
 geolocation.organisations=/opt/dccd-home/data/geolocation_organisations.json
 project.categories.path=/opt/dccd-home/data/dccd_project_categories.json
