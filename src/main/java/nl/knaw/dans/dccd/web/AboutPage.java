@@ -15,7 +15,14 @@
  ******************************************************************************/
 package nl.knaw.dans.dccd.web;
 
+import nl.knaw.dans.common.lang.user.User;
+import nl.knaw.dans.dccd.web.authn.LoginPage;
 import nl.knaw.dans.dccd.web.base.BasePage;
+
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author dev
@@ -23,11 +30,38 @@ import nl.knaw.dans.dccd.web.base.BasePage;
 public class AboutPage extends BasePage
 {
 	private static final long serialVersionUID = 1L;
+	public static final String PROJECT_CATEGORIES_PATH = "project.categories.path";
+	public static final String TAXON_DATA_PATH = "taxon.data.path";
+	private static Logger logger = LoggerFactory.getLogger(AboutPage.class);
+
+	User currentUser;
 	
 	public AboutPage()
 	{
 		super();
-		// TODO Auto-generated constructor stub
+		logger.error("About page called");
+		currentUser = ((DccdSession) getSession()).getUser();
+
+		
+		Label loginForMore = new Label("loginForMore", getString("moreInfoWhenLoggedIn"));
+		BookmarkablePageLink loginLink = new BookmarkablePageLink("login", LoginPage.class);
+		add(loginForMore);
+		add(loginLink);
+		
+		StatisticsDisplayPanel statsPanel = new StatisticsDisplayPanel("statsPanel");
+		add(statsPanel);
+		
+		
+		if(currentUser!=null)
+		{
+			loginForMore.setVisible(false);
+			loginLink.setVisible(false);
+		}
+		
+
 	}
+	
+
+		
 }
 

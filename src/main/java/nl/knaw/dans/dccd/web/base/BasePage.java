@@ -94,7 +94,7 @@ public abstract class BasePage extends WebPage
 	}
 
 	//public abstract String getTitle();
-    public String getTitle() { return "";}
+    public String getTitle() { return "About DCCD";}
 
     /**
      * Refresh the contents of the page. Subclasses may override.

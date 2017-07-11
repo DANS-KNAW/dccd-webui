@@ -1,16 +1,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+
+
+
 <body>
 <wicket:extend>
 
 <div class="infoPageContent">
-	<br/>
 	<wicket:message key="text">[text]</wicket:message>
-	<br/>
-	<wicket:message key="more_info">[more]</wicket:message>
 	
+	<span wicket:id="loginForMore">[loginForMore]</span>
+	<a href="#" wicket:id="login"><wicket:message key="page.login">login</wicket:message></a>
+
+	<div wicket:id="statsPanel">[statsPanel]</div>
 </div><!-- to center content -->
+
 
 <wicket:remove>
 <!-- 
