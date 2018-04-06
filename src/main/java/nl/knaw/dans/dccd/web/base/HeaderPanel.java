@@ -26,7 +26,6 @@ import nl.knaw.dans.dccd.web.AboutPage;
 import nl.knaw.dans.dccd.web.ContactPage;
 import nl.knaw.dans.dccd.web.DccdSession;
 import nl.knaw.dans.dccd.web.HomePage;
-import nl.knaw.dans.dccd.web.LinksPage;
 import nl.knaw.dans.dccd.web.authn.OrganisationListPage;
 import nl.knaw.dans.dccd.web.personalbar.PersonalBarPanelDefault;
 import nl.knaw.dans.dccd.web.personalbar.PersonalBarPanelLoggedIn;
@@ -68,7 +67,6 @@ public class HeaderPanel extends Panel {
 		add(new BookmarkablePageLink("aboutLink", AboutPage.class));
 		add(new BookmarkablePageLink("contactLink", ContactPage.class));
 		add(new BookmarkablePageLink("organisationsLink", OrganisationListPage.class));
-		add(new BookmarkablePageLink("productsAndLinksLink", LinksPage.class));
 		
 		BookmarkablePageLink advancedSearchLink = new BookmarkablePageLink("advancedSearchLink", 
 				nl.knaw.dans.dccd.web.search.pages.AdvSearchPage.class);		

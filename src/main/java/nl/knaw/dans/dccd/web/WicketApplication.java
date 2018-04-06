@@ -124,7 +124,6 @@ public final class WicketApplication extends WebApplication
 	    mountBookmarkablePage("/organisations", OrganisationListPage.class);
 	    mountBookmarkablePage("/about", AboutPage.class);
 	    mountBookmarkablePage("/contact", ContactPage.class);
-	    mountBookmarkablePage("/links", LinksPage.class);
 	    
 	    mountBookmarkablePage("/termsofuse", TermsOfUsePage.class);
 	    mountBookmarkablePage("/acknowledgements", AcknowledgementsPage.class);

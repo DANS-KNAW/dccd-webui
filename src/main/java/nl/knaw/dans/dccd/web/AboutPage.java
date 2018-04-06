@@ -39,7 +39,8 @@ public class AboutPage extends BasePage
 	public AboutPage()
 	{
 		super();
-		logger.error("About page called");
+		/* TODO fix stats
+		logger.debug("About page called");
 		currentUser = ((DccdSession) getSession()).getUser();
 
 		
@@ -57,7 +58,7 @@ public class AboutPage extends BasePage
 			loginForMore.setVisible(false);
 			loginLink.setVisible(false);
 		}
-		
+		*/
 
 	}
 	
