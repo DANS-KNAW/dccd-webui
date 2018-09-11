@@ -17,54 +17,38 @@ package nl.knaw.dans.dccd.web.search;
 
 import java.io.StringWriter;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
 
-import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.wicket.Page;
-import org.apache.wicket.Resource;
-import org.apache.wicket.Session;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.extensions.ajax.markup.html.IndicatingAjaxButton;
-import org.apache.wicket.markup.html.DynamicWebResource;
-import org.apache.wicket.markup.html.WebResource;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Button;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.html.link.ResourceLink;
-import org.apache.wicket.model.AbstractReadOnlyModel;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.ResourceModel;
-import org.apache.wicket.model.StringResourceModel;
-import org.apache.wicket.protocol.http.WebResponse;
-import org.apache.wicket.util.resource.IResourceStream;
-import org.apache.wicket.util.resource.StringResourceStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import nl.knaw.dans.common.lang.search.SearchHit;
-import nl.knaw.dans.common.lang.search.SearchRequest;
 import nl.knaw.dans.common.lang.search.SearchResult;
-import nl.knaw.dans.common.lang.search.bean.StringListCollapserConverter;
-import nl.knaw.dans.common.lang.search.exceptions.SearchBeanConverterException;
 import nl.knaw.dans.common.lang.search.simple.SimpleSearchRequest;
 import nl.knaw.dans.common.wicket.components.UnescapedLabel;
 import nl.knaw.dans.common.wicket.components.search.SearchPanel;
-import nl.knaw.dans.common.wicket.components.search.SearchResources;
 import nl.knaw.dans.common.wicket.components.search.model.SearchData;
 import nl.knaw.dans.common.wicket.components.search.model.SearchModel;
 import nl.knaw.dans.common.wicket.components.search.model.SearchRequestBuilder;
 import nl.knaw.dans.common.wicket.exceptions.InternalWebError;
 import nl.knaw.dans.dccd.model.DccdUser;
-import nl.knaw.dans.dccd.model.ProjectPermissionLevel;
 import nl.knaw.dans.dccd.search.DccdSB;
-import nl.knaw.dans.dccd.util.StringUtil;
 import nl.knaw.dans.dccd.web.DccdSession;
 import nl.knaw.dans.dccd.web.HomePage;
 import nl.knaw.dans.dccd.web.base.BasePage;
-import nl.knaw.dans.dccd.web.search.pages.LocationSearchResultPage;
+
+import org.apache.wicket.Page;
+import org.apache.wicket.Session;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.extensions.ajax.markup.html.IndicatingAjaxButton;
+import org.apache.wicket.markup.html.WebResource;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.link.ResourceLink;
+import org.apache.wicket.model.ResourceModel;
+import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.protocol.http.WebResponse;
+import org.apache.wicket.util.resource.IResourceStream;
+import org.apache.wicket.util.resource.StringResourceStream;
+import org.apache.wicket.util.string.Strings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SearchResultDownloadPage extends BasePage
 {
@@ -134,7 +118,7 @@ public class SearchResultDownloadPage extends BasePage
 		String queryString = originalRequestBuilder.getRequest().getQuery().getQueryString();
 		add(new UnescapedLabel("resultMessage", 
 				new StringResourceModel("search.download.resultMessage", this, null, 
-						new Object[] {totalHits, queryString})));
+						new Object[] {totalHits, Strings.escapeMarkup(queryString)})));
 		
 		// Need the user for the permission check
 		user = (DccdUser) ((DccdSession) getSession()).getUser();
