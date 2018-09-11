@@ -21,7 +21,6 @@ import java.util.List;
 import nl.knaw.dans.common.lang.search.SearchHit;
 import nl.knaw.dans.common.lang.search.SearchRequest;
 import nl.knaw.dans.common.lang.search.SearchResult;
-import nl.knaw.dans.common.lang.search.simple.SimpleSearchRequest;
 import nl.knaw.dans.common.wicket.WicketUtil;
 import nl.knaw.dans.common.wicket.components.UnescapedLabel;
 import nl.knaw.dans.common.wicket.components.pagebrowse.PageBrowseData;
@@ -54,13 +53,13 @@ import nl.knaw.dans.dccd.search.DccdSB;
 import nl.knaw.dans.dccd.web.DccdSession;
 import nl.knaw.dans.dccd.web.search.pages.LocationSearchResultPage;
 import nl.knaw.dans.dccd.web.search.pages.PeriodSearchResultPage;
-import nl.knaw.dans.dccd.web.search.pages.SearchResultExplorePage;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.RequestCycle;
 import org.apache.wicket.Session;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
@@ -71,7 +70,6 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.protocol.http.RequestUtils;
-import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.string.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -418,14 +416,14 @@ public abstract class DccdSearchResultPanel extends SearchPanel
 					if (result.getTotalHits() == 1)
 			        {
 			            return new StringResourceModel(RI_RESULTMESSAGE_1, DccdSearchResultPanel.this, null, new Object[] {
-			                            queryString}).getObject();
+			            		Strings.escapeMarkup(queryString)}).getObject();
 			        }
 			        else if (result.getTotalHits() > 1 && 
 			        		result.getTotalHits() <= request.getLimit())
 			        {
 			            return new StringResourceModel(RI_RESULTMESSAGE_1PAGE, DccdSearchResultPanel.this, null, new Object[] {
 				                    result.getTotalHits(),
-				                    queryString
+				                    Strings.escapeMarkup(queryString)
 			                    }).getObject();
 			        }
 			        else if (result.getTotalHits() > 1) 
@@ -434,13 +432,13 @@ public abstract class DccdSearchResultPanel extends SearchPanel
 				                    request.getOffset()+1,
 				                    Math.min( request.getOffset() + request.getLimit(), result.getTotalHits()),
 				                    result.getTotalHits(),
-				                    queryString
+				                    Strings.escapeMarkup(queryString)
 			                    }).getObject();
 			        }
 			        else
 			        {
 			        	return new StringResourceModel(RI_NO_RESULTS, DccdSearchResultPanel.this, null, new Object[] {
-			                            queryString}).getObject();
+			        			Strings.escapeMarkup(queryString)}).getObject();
 			        }
 		        }
 		        else

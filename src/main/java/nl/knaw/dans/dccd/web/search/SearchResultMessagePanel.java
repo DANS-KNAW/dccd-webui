@@ -15,16 +15,18 @@
  ******************************************************************************/
 package nl.knaw.dans.dccd.web.search;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.wicket.model.AbstractReadOnlyModel;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.StringResourceModel;
-
 import nl.knaw.dans.common.lang.search.SearchRequest;
 import nl.knaw.dans.common.lang.search.SearchResult;
 import nl.knaw.dans.common.wicket.components.UnescapedLabel;
 import nl.knaw.dans.common.wicket.components.search.BaseSearchPanel;
 import nl.knaw.dans.common.wicket.components.search.model.SearchModel;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.util.string.Strings;
 
 public class SearchResultMessagePanel extends BaseSearchPanel
 {
@@ -61,14 +63,14 @@ public class SearchResultMessagePanel extends BaseSearchPanel
 					if (result.getTotalHits() == 1)
 			        {
 			            return new StringResourceModel(RI_RESULTMESSAGE_1, SearchResultMessagePanel.this, null, new Object[] {
-			                            queryString}).getObject();
+			            		Strings.escapeMarkup(queryString)}).getObject();
 			        }
 			        else if (result.getTotalHits() > 1 && 
 			        		result.getTotalHits() <= request.getLimit())
 			        {
 			            return new StringResourceModel(RI_RESULTMESSAGE_1PAGE, SearchResultMessagePanel.this, null, new Object[] {
 				                    result.getTotalHits(),
-				                    queryString
+				                    Strings.escapeMarkup(queryString)
 			                    }).getObject();
 			        }
 			        else if (result.getTotalHits() > 1) 
@@ -77,13 +79,13 @@ public class SearchResultMessagePanel extends BaseSearchPanel
 				                    request.getOffset()+1,
 				                    Math.min( request.getOffset() + request.getLimit(), result.getTotalHits()),
 				                    result.getTotalHits(),
-				                    queryString
+				                    Strings.escapeMarkup(queryString)
 			                    }).getObject();
 			        }
 			        else
 			        {
 			        	return new StringResourceModel(RI_NO_RESULTS, SearchResultMessagePanel.this, null, new Object[] {
-			                            queryString}).getObject();
+			        			Strings.escapeMarkup(queryString)}).getObject();
 			        }
 		        }
 		        else

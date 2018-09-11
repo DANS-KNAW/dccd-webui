@@ -26,8 +26,6 @@ import nl.knaw.dans.common.wicket.components.search.SearchPanel;
 import nl.knaw.dans.common.wicket.components.search.model.SearchData;
 import nl.knaw.dans.common.wicket.components.search.model.SearchModel;
 import nl.knaw.dans.common.wicket.components.search.model.SearchRequestBuilder;
-
-import nl.knaw.dans.dccd.common.lang.geo.LonLat;
 import nl.knaw.dans.dccd.common.lang.geo.Marker;
 import nl.knaw.dans.dccd.common.wicket.geo.GeoViewer;
 import nl.knaw.dans.dccd.common.wicket.geo.LazyLoadingGeoViewer;
@@ -40,18 +38,14 @@ import nl.knaw.dans.dccd.web.DccdSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.RequestCycle;
-import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.markup.html.IHeaderResponse;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.StringResourceModel;
-import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.protocol.http.RequestUtils;
+import org.apache.wicket.util.string.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.wicket.util.string.Strings;
-import org.apache.wicket.util.string.Strings;
 
 /**
  * Display a (large) map with locations from all search results (unpaged)
@@ -134,14 +128,14 @@ public abstract class LocationSearchResultPanel extends SearchPanel
 					if (result.getTotalHits() == 1)
 			        {
 			            return new StringResourceModel(RI_RESULTMESSAGE_1, LocationSearchResultPanel.this, null, new Object[] {
-			                            queryString}).getObject();
+			            		Strings.escapeMarkup(queryString)}).getObject();
 			        }
 			        else if (result.getTotalHits() > 1 && 
 			        		result.getTotalHits() <= request.getLimit())
 			        {
 			            return new StringResourceModel(RI_RESULTMESSAGE_1PAGE, LocationSearchResultPanel.this, null, new Object[] {
 				                    result.getTotalHits(),
-				                    queryString
+				                    Strings.escapeMarkup(queryString)
 			                    }).getObject();
 			        }
 			        else if (result.getTotalHits() > 1) 
@@ -150,13 +144,13 @@ public abstract class LocationSearchResultPanel extends SearchPanel
 				                    request.getOffset()+1,
 				                    Math.min( request.getOffset() + request.getLimit(), result.getTotalHits()),
 				                    result.getTotalHits(),
-				                    queryString
+				                    Strings.escapeMarkup(queryString)
 			                    }).getObject();
 			        }
 			        else
 			        {
 			        	return new StringResourceModel(RI_NO_RESULTS, LocationSearchResultPanel.this, null, new Object[] {
-			                            queryString}).getObject();
+			        			Strings.escapeMarkup(queryString)}).getObject();
 			        }
 		        }
 		        else

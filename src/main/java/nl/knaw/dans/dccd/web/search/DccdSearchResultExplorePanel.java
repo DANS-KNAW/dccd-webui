@@ -18,36 +18,19 @@ package nl.knaw.dans.dccd.web.search;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.knaw.dans.common.lang.search.Field;
 import nl.knaw.dans.common.lang.search.SearchHit;
 import nl.knaw.dans.common.lang.search.SearchRequest;
 import nl.knaw.dans.common.lang.search.SearchResult;
 import nl.knaw.dans.common.lang.search.simple.CombinedOptionalField;
 import nl.knaw.dans.common.lang.search.simple.SimpleField;
-import nl.knaw.dans.common.lang.search.simple.SimpleSearchRequest;
-import nl.knaw.dans.common.wicket.WicketUtil;
 import nl.knaw.dans.common.wicket.components.UnescapedLabel;
-import nl.knaw.dans.common.wicket.components.pagebrowse.PageBrowseData;
-import nl.knaw.dans.common.wicket.components.pagebrowse.PageBrowseLinkListener;
-import nl.knaw.dans.common.wicket.components.pagebrowse.PageBrowsePanel;
-import nl.knaw.dans.common.wicket.components.pagebrowse.PageBrowsePanel.PageBrowseLink;
-import nl.knaw.dans.common.wicket.components.search.SearchBar;
 import nl.knaw.dans.common.wicket.components.search.SearchPanel;
-import nl.knaw.dans.common.wicket.components.search.criteria.CriteriumLabel;
 import nl.knaw.dans.common.wicket.components.search.criteria.FilterCriterium;
-import nl.knaw.dans.common.wicket.components.search.criteria.MultiFilterCriterium;
 import nl.knaw.dans.common.wicket.components.search.criteria.SearchCriteriaPanel;
-import nl.knaw.dans.common.wicket.components.search.criteria.TextSearchCriterium;
-import nl.knaw.dans.common.wicket.components.search.facets.FacetConfig;
-import nl.knaw.dans.common.wicket.components.search.facets.FacetPanel;
 import nl.knaw.dans.common.wicket.components.search.model.SearchCriterium;
 import nl.knaw.dans.common.wicket.components.search.model.SearchData;
 import nl.knaw.dans.common.wicket.components.search.model.SearchModel;
 import nl.knaw.dans.common.wicket.components.search.model.SearchRequestBuilder;
-import nl.knaw.dans.common.wicket.components.search.results.SearchResultConfig;
-import nl.knaw.dans.common.wicket.components.search.results.SearchSortPanel;
-import nl.knaw.dans.common.wicket.exceptions.InternalWebError;
-import nl.knaw.dans.dccd.common.lang.geo.LonLat;
 import nl.knaw.dans.dccd.common.lang.geo.Marker;
 import nl.knaw.dans.dccd.common.wicket.geo.GeoViewer;
 import nl.knaw.dans.dccd.common.wicket.geo.LazyLoadingGeoViewer;
@@ -59,31 +42,20 @@ import nl.knaw.dans.dccd.search.DccdObjectSB;
 import nl.knaw.dans.dccd.search.DccdProjectSB;
 import nl.knaw.dans.dccd.search.DccdSB;
 import nl.knaw.dans.dccd.web.DccdSession;
-import nl.knaw.dans.dccd.web.search.pages.LocationSearchResultPage;
-import nl.knaw.dans.dccd.web.search.pages.PeriodSearchResultPage;
 import nl.knaw.dans.dccd.web.search.years.YearRange;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.RequestCycle;
-import org.apache.wicket.Session;
-import org.apache.wicket.behavior.AttributeAppender;
-import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.protocol.http.RequestUtils;
-import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.util.string.Strings;
-import org.apache.wicket.validation.validator.MinimumValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -251,14 +223,14 @@ public abstract class DccdSearchResultExplorePanel extends SearchPanel
 					if (result.getTotalHits() == 1)
 			        {
 			            return new StringResourceModel(RI_RESULTMESSAGE_1, DccdSearchResultExplorePanel.this, null, new Object[] {
-			                            queryString}).getObject();
+			            		Strings.escapeMarkup(queryString)}).getObject();
 			        }
 			        else if (result.getTotalHits() > 1 && 
 			        		result.getTotalHits() <= request.getLimit())
 			        {
 			            return new StringResourceModel(RI_RESULTMESSAGE_1PAGE, DccdSearchResultExplorePanel.this, null, new Object[] {
 				                    result.getTotalHits(),
-				                    queryString
+				                    Strings.escapeMarkup(queryString)
 			                    }).getObject();
 			        }
 			        else if (result.getTotalHits() > 1) 
@@ -267,13 +239,13 @@ public abstract class DccdSearchResultExplorePanel extends SearchPanel
 				                    request.getOffset()+1,
 				                    Math.min( request.getOffset() + request.getLimit(), result.getTotalHits()),
 				                    result.getTotalHits(),
-				                    queryString
+				                    Strings.escapeMarkup(queryString)
 			                    }).getObject();
 			        }
 			        else
 			        {
 			        	return new StringResourceModel(RI_NO_RESULTS, DccdSearchResultExplorePanel.this, null, new Object[] {
-			                            queryString}).getObject();
+			        			Strings.escapeMarkup(queryString)}).getObject();
 			        }
 		        }
 		        else
